@@ -1,21 +1,6 @@
-# Puppet Manifest to setup a nginx server
+# Installs a Nginx server
 
-package { 'nginx':
-  ensure => installed,
-}
-
-file_line { 'server_config':
-  ensure => 'present',
-  path   => '/etc/nginx/sites-available/default',
-  after  => 'listen 80 default_server;',
-  line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
-}
-
-file { '/var/www/html/index.html':
-  content => 'Holberton School',
-}
-
-service { 'nginx':
-  ensure  => running,
-  require => Package['nginx'],
+exec {'install':
+  provider => shell,
+  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Tolulope05 permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
 }
