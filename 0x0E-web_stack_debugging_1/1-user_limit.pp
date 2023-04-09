@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Configures an Nginx server to listen on port 80.
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx start
-kill "$(pgrep 'nginx' | head -1)"
+#stop the service after execute
+sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
+sudo pkill -1 -f '/usr/sbin/nginx'
